@@ -1,4 +1,4 @@
-package com.javarush.knjasev;
+package com.javarush;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javarush.dao.CityDAO;
@@ -6,8 +6,6 @@ import com.javarush.dao.CountryDAO;
 import com.javarush.domain.City;
 import com.javarush.domain.Country;
 import com.javarush.domain.CountryLanguage;
-
-//import com.mysql.cj.xdevapi.SessionFactory;
 
 import com.javarush.redis.CityCountry;
 import com.javarush.redis.Language;
@@ -57,21 +55,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        //System.out.println("Hello, World!");
-
-//        Main main = new Main();
-//        List<City> allCities = main.fetchData(main);
-//        List<CityCountry> preparedData = main.transformData(allCities);
-//
-//        main.pushToRedis(preparedData);
-//        main.shutdown();
-
         Main main = new Main();
         List<City> allCities = main.fetchData(main);
         List<CityCountry> preparedData = main.transformData(allCities);
         main.pushToRedis(preparedData);
 
-        //закроем текущую сессию, чтоб точно делать запрос к БД, а не вытянуть данные из кэша
+        //закроем текущую сессию, чтобы точно делать запрос к БД, а не вытянуть данные из кэша
         main.sessionFactory.getCurrentSession().close();
 
         //выбираем случайных 10 id городов
@@ -110,7 +99,7 @@ public class Main {
         return cities.stream().map(city -> {
             CityCountry res = new CityCountry();
             res.setId(city.getId());
-            res.setName(city.getName());
+            res.setCityName(city.getName());
             res.setPopulation(city.getPopulation());
             res.setDistrict(city.getDistrict());
 
@@ -138,21 +127,11 @@ public class Main {
 
     private SessionFactory prepareRelationalDb() {
         final SessionFactory sessionFactory;
-        Properties properties = new Properties();
-        properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
-        properties.put(Environment.DRIVER, "com.p6spy.engine.spy.P6SpyDriver");
-        properties.put(Environment.URL, "jdbc:p6spy:mysql://localhost:3306/world");
-        properties.put(Environment.USER, "root");
-        properties.put(Environment.PASS, "root");
-        properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-        properties.put(Environment.HBM2DDL_AUTO, "validate");
-        properties.put(Environment.STATEMENT_BATCH_SIZE, "100");
 
         sessionFactory = new Configuration()
                 .addAnnotatedClass(City.class)
                 .addAnnotatedClass(Country.class)
                 .addAnnotatedClass(CountryLanguage.class)
-                .addProperties(properties)
                 .buildSessionFactory();
         return sessionFactory;
     }

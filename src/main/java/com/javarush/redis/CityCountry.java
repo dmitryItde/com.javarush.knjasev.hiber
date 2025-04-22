@@ -6,32 +6,22 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 public class CityCountry {
+
     private Integer id;
-
-    private String name;
-
+    private String cityName;
     private String district;
-
     private Integer population;
-
     private String countryCode;
-
     private String alternativeCountryCode;
-
     private String countryName;
-
     private Continent continent;
-
     private String countryRegion;
-
     private BigDecimal countrySurfaceArea;
-
     private Integer countryPopulation;
-
     private Set<Language> languages;
 
 
-    //Getters and Setters omitted. Геттеры и сеттеры добавил сам
+    //Getters and Setters omitted. Геттеры и сеттеры добавил
     public Integer getId() {
         return id;
     }
@@ -40,12 +30,12 @@ public class CityCountry {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public String getDistrict() {

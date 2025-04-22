@@ -16,7 +16,6 @@ public class City {
     private Country country;
 
     private String district;
-
     private Integer population;
 
     //Getters and Setters omitted. Геттеры и сеттеры добавил сам
